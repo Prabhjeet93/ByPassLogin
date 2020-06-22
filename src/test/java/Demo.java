@@ -27,16 +27,13 @@ public class Demo {
         try {
             // Create a local instance of cookie store
             CookieStore cookieStore = new BasicCookieStore();
-            System.setProperty("webdriver.chrome.driver","drivers/chromedriver.exe");
-            WebDriver driver = new ChromeDriver();
-            driver.navigate().to("http://the-internet.herokuapp.com/login");
 
             // Create local HTTP context
             HttpClientContext localContext = HttpClientContext.create();
             // Bind custom cookie store to the local context
             localContext.setCookieStore(cookieStore);
 
-            HttpGet httpget = new HttpGet("http://the-internet.herokuapp.com/login");
+            HttpGet httpget = new HttpGet("https://www.hepsiburada.com/ayagina-gelsin/giris");
             System.out.println("Executing request " + httpget.getRequestLine());
 
             httpclient.start();
@@ -49,24 +46,21 @@ public class Demo {
 
             System.out.println("Shutting down");
 
-            HttpPost httpPost = new HttpPost("http://the-internet.herokuapp.com/login");
+            HttpPost httpPost = new HttpPost("https://www.hepsiburada.com/ayagina-gelsin/Customer/Login");
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("username", "tomsmith"));
-            params.add(new BasicNameValuePair("password", "SuperSecretPassword!"));
+            params.add(new BasicNameValuePair("em", "swtestacademy@mailinator.com"));
+            params.add(new BasicNameValuePair("p", "Qwerty_123"));
             httpPost.setEntity(new UrlEncodedFormEntity(params));
             future = httpclient.execute(httpPost,localContext,null);
-          // future.
             HttpResponse response = future.get();
-            System.out.println(response);
             System.out.println("Response: " + response.getStatusLine());
             List<Cookie> cookies = cookieStore.getCookies();
             cookies = cookieStore.getCookies();
 
-            System.out.println("cookies :::  "+cookies);
 
-            /*System.setProperty("webdriver.chrome.driver","drivers/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver","drivers/chromedriver");
             WebDriver driver = new ChromeDriver();
-            driver.navigate().to("http://the-internet.herokuapp.com/login");*/
+            driver.navigate().to("https://www.hepsiburada.com/siparislerim/");
 
             org.openqa.selenium.Cookie c;
             for (int i = 0; i < cookies.size(); i++) {
@@ -74,11 +68,11 @@ public class Demo {
                 c = new org.openqa.selenium.Cookie(cookies.get(i).getName(),cookies.get(i).getValue());
                 driver.manage().addCookie(c);
             }
-            driver.navigate().to("http://the-internet.herokuapp.com/secure");
+            driver.navigate().to("https://www.hepsiburada.com/siparislerim/");
 
 
         } finally {
-           // httpclient.close();
+            httpclient.close();
         }
 
     }
